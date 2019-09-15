@@ -1,0 +1,101 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier"
+  ],
+  "rulesDirectory": [
+    "codelyzer",
+    "tslint-plugin-prettier"
+  ],
+  "rules": {
+    "prettier": true,
+    "array-type": [true, "array"],
+    "deprecation": {
+      "severity": "warn"
+    },
+    "import-blacklist": [
+      true,
+      "rxjs/Rx"
+    ],
+    "interface-name": false,
+    "max-classes-per-file": false,
+    "member-access": [true, "no-public"],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "no-console": [
+      true,
+      "log",
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-empty": false,
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
+    "no-non-null-assertion": true,
+    "no-redundant-jsdoc": true,
+    "no-switch-case-fall-through": true,
+    "no-use-before-declare": true,
+    "no-var-requires": true,
+    "object-literal-sort-keys": false,
+    "ordered-imports": [true, { "grouped-imports": true }],
+    "no-output-on-prefix": true,
+    "no-inputs-metadata-property": true,
+    "no-outputs-metadata-property": true,
+    "no-host-metadata-property": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "contextual-decorator": true,
+    "no-attribute-decorator": true,
+    "no-forward-ref": true,
+    "no-unused-css": true,
+    "no-pipe-impure": true,
+    "pipe-naming": ["camelCase"],
+    "template-no-negated-async": true,
+    "use-pipe-decorator": true,
+    "use-component-view-encapsulation": true,
+    "no-internal-module": true,
+    "no-reference": true,
+    "prefer-for-of": true,
+    "no-dynamic-delete": true,
+    "no-for-in-array": true,
+    "no-invalid-template-strings": true,
+    "no-sparse-arrays": true,
+    "prefer-object-spread": true,
+    "restrict-plus-operands": true,
+    "strict-boolean-expressions": false,
+    "no-duplicate-imports": true,
+    "no-require-imports": true,
+    "match-default-export-name": true,
+    "no-reference-import": true,
+    "no-unnecessary-callback-wrapper": true,
+    "object-literal-shorthand": true,
+    "one-variable-per-declaration": [true, "ignore-for-loop"],
+    "prefer-template": true,
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ]
+  }
+}
