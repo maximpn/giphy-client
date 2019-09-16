@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as XRegExp from 'xregexp';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UrlEncoderService {
   encode(input: string): string {

@@ -10,7 +10,7 @@ export class SearchTextResolverService implements Resolve<string> {
 
   resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): Observable<string> | Observable<never> {
     if (route.url.length === 0) {
       return EMPTY;

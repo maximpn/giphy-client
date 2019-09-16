@@ -13,9 +13,16 @@ import { SearchResultComponent } from './components/search-results/search-result
 import { SearchTextResolverService } from './services/search-text-resolver.service';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, SharedModule, FormsModule, PerfectScrollbarModule, ClipboardModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    SharedModule,
+    FormsModule,
+    PerfectScrollbarModule,
+    ClipboardModule,
+  ],
   providers: [SearchTextResolverService],
   declarations: [SearchFieldComponent, SearchResultComponent, GifImageComponent],
-  exports: [SearchFieldComponent, SearchResultComponent]
+  exports: [SearchFieldComponent, SearchResultComponent],
 })
 export class SearchGifModule {}

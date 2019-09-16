@@ -94,6 +94,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "codeCoverage": true,
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles"

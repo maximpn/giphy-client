@@ -1,22 +1,12 @@
 import { EMPTY, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
-export interface Pagination<T> {
-  data: T[];
-  fetchedCount: number;
-  totalCount: number;
-}
-
-export type DataFetcher<T> = (pageSize: number, offset: number) => Observable<Pagination<T>>;
+export type DataFetcher<T> = (pageSize: number, offset: number) => Observable<T[]>;
 
 export class Pager<T> {
   private currentOffset = 0;
 
-  constructor(
-    private fetcher: DataFetcher<T>,
-    private pageSize: number,
-    private totalCount?: number
-  ) {}
+  constructor(private fetcher: DataFetcher<T>, private pageSize: number) {}
 
   getNextPage(): Observable<T[]> {
     if (this.currentOffset === -1) {
@@ -24,23 +14,14 @@ export class Pager<T> {
     }
 
     return this.fetcher(this.pageSize, this.currentOffset).pipe(
-      tap((result) => this.updateOffset(result)),
-      map((result) => result.data)
+      tap(data => this.updateOffset(data.length)),
     );
   }
 
-  private updateOffset(pagination: Pagination<T>): void {
+  private updateOffset(fetchedCount: number): void {
     this.currentOffset += this.pageSize;
 
-    if (pagination.totalCount && this.totalCount !== pagination.totalCount) {
-      this.totalCount = pagination.totalCount;
-    }
-
-    if (!this.totalCount) {
-      return;
-    }
-
-    if (pagination.fetchedCount < this.pageSize) {
+    if (fetchedCount < this.pageSize) {
       this.currentOffset = -1;
     }
   }

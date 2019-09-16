@@ -9,7 +9,7 @@ const VERSION = 'v1';
 const API_KEY = 'CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GiphyService {
   constructor(private http: HttpClient) {}
@@ -31,7 +31,7 @@ export class GiphyService {
 
   private getDefaultParams(): HttpParams {
     return new HttpParams({
-      fromObject: { api_key: API_KEY }
+      fromObject: { api_key: API_KEY },
     });
   }
 

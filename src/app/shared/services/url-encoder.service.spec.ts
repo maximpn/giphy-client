@@ -38,4 +38,12 @@ describe('UrlEncoderService', () => {
 
     expect(actual).toBe(expected);
   });
+
+  it('should preserve numbers', () => {
+    const expected = 'some-text-123';
+
+    const actual = service.encode('some text 123');
+
+    expect(actual).toBe(expected);
+  });
 });

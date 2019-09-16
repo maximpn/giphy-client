@@ -8,6 +8,6 @@ import { ComponentsModule } from './components/components.module';
 @NgModule({
   imports: [BrowserModule, AppRoutingModule, ComponentsModule],
   declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

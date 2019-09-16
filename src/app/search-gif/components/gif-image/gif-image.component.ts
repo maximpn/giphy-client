@@ -18,10 +18,7 @@ export class GifImageComponent implements OnChanges {
   width: number;
   height: number;
 
-  constructor(
-    private clipboardService: ClipboardService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private clipboardService: ClipboardService, private snackBar: MatSnackBar) {}
 
   ngOnChanges(changes): void {
     if ('gif' in changes) {

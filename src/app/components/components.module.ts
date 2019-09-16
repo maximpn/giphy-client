@@ -10,6 +10,6 @@ import { WelcomeComponent } from './welcome/welcome.component';
 @NgModule({
   imports: [CommonModule, MaterialModule, SearchGifModule],
   declarations: [HeaderComponent, WelcomeComponent],
-  exports: [HeaderComponent, WelcomeComponent]
+  exports: [HeaderComponent, WelcomeComponent],
 })
 export class ComponentsModule {}

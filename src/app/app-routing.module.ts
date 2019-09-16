@@ -9,19 +9,19 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: WelcomeComponent
+    component: WelcomeComponent,
   },
   {
     path: ':searchText',
     component: SearchResultComponent,
     resolve: {
-      searchText: SearchTextResolverService
-    }
-  }
+      searchText: SearchTextResolverService,
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

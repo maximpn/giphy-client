@@ -8,7 +8,7 @@ import { UrlEncoderService } from '../../../shared/services/url-encoder.service'
 @Component({
   selector: 'app-search-field',
   templateUrl: 'search-field.component.html',
-  styleUrls: ['search-field.component.scss']
+  styleUrls: ['search-field.component.scss'],
 })
 export class SearchFieldComponent implements OnInit, OnDestroy {
   @Output()
@@ -24,7 +24,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(
         takeUntil(this.unsubscribe),
-        filter((e) => e instanceof ActivationEnd)
+        filter(e => e instanceof ActivationEnd),
       )
       .subscribe((event: ActivationEnd) => {
         const data = event.snapshot.data;

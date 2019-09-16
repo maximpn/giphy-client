@@ -10,7 +10,7 @@ describe('GiphyService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [GiphyService]
+      providers: [GiphyService],
     });
 
     http = TestBed.get(HttpTestingController);
@@ -25,14 +25,14 @@ describe('GiphyService', () => {
     const expected = {
       data: [{}, {}, {}],
       meta: {},
-      pagination: {}
+      pagination: {},
     };
     let actual: any;
 
-    service.searchGif('some search text', 50, 10).subscribe((result) => (actual = result));
+    service.searchGif('some search text', 50, 10).subscribe(result => (actual = result));
 
     const request = http.expectOne(
-      'https://api.giphy.com/v1/gifs/search?api_key=CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6&limit=50&offset=10&q=some%20search%20text&rating=g&lang=en'
+      'https://api.giphy.com/v1/gifs/search?api_key=CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6&limit=50&offset=10&q=some%20search%20text&rating=g&lang=en',
     );
     request.flush(expected);
 
