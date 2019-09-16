@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { SharedModule } from '../shared/shared.module';
-import { GifImageComponent } from './components/gif-image/gif-image.component';
 
+import { GifImageComponent } from './components/gif-image/gif-image.component';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { SearchResultComponent } from './components/search-results/search-result.component';
 import { SearchTextResolverService } from './services/search-text-resolver.service';

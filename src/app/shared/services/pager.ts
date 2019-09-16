@@ -15,7 +15,7 @@ export class Pager<T> {
   constructor(
     private fetcher: DataFetcher<T>,
     private pageSize: number,
-    private totalCount?: number,
+    private totalCount?: number
   ) {}
 
   getNextPage(): Observable<T[]> {
@@ -24,8 +24,8 @@ export class Pager<T> {
     }
 
     return this.fetcher(this.pageSize, this.currentOffset).pipe(
-      tap(result => this.updateOffset(result)),
-      map(result => result.data),
+      tap((result) => this.updateOffset(result)),
+      map((result) => result.data)
     );
   }
 

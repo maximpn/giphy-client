@@ -19,9 +19,9 @@ export interface Gif {
   import_datetime: string;
   trending_datetime: string;
   images: {
-    original: Image,
-    fixed_height: Image,
-    fixed_width: Image,
+    original: Image;
+    fixed_height: Image;
+    fixed_width: Image;
   };
   title: string;
 }

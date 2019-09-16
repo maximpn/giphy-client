@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { ActivationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+
 import { UrlEncoderService } from '../../../shared/services/url-encoder.service';
 
 @Component({
@@ -17,20 +18,19 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  constructor(
-    private urlEncoderService: UrlEncoderService,
-    private router: Router,
-  ) {}
+  constructor(private urlEncoderService: UrlEncoderService, private router: Router) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      takeUntil(this.unsubscribe),
-      filter(e => e instanceof ActivationEnd),
-    ).subscribe((event: ActivationEnd) => {
-      const data = event.snapshot.data;
+    this.router.events
+      .pipe(
+        takeUntil(this.unsubscribe),
+        filter((e) => e instanceof ActivationEnd)
+      )
+      .subscribe((event: ActivationEnd) => {
+        const data = event.snapshot.data;
 
-      this.searchText = data.searchText || '';
-    });
+        this.searchText = data.searchText || '';
+      });
   }
 
   ngOnDestroy(): void {

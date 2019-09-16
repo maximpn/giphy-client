@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit } from '@
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, scan, shareReplay, startWith, switchMap, takeUntil } from 'rxjs/operators';
+
 import { GiphyService } from '../../../shared/services/giphy.service';
 import { DataFetcher, Pager } from '../../../shared/services/pager';
 import { PagerService } from '../../../shared/services/pager.service';
@@ -12,7 +13,7 @@ const PAGE_SIZE = 25;
 @Component({
   templateUrl: 'search-result.component.html',
   styleUrls: ['search-result.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
   gifs$: Observable<Gif[]>;
@@ -24,30 +25,30 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private giphyService: GiphyService,
     private pagerService: PagerService,
-    private ngZone: NgZone,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
     const pager$ = this.route.data.pipe(
-      map(data => {
+      map((data) => {
         const fetcher = this.createDataFetcher(data.searchText);
 
         return this.pagerService.createPager(fetcher, PAGE_SIZE);
-      }),
+      })
     );
 
     const fetchGifs = (pager: Pager<Gif>) => {
       return this.requestNextPage$.pipe(
         startWith(0),
         switchMap(() => pager.getNextPage()),
-        scan((merged, gifs) => merged.concat(gifs), []),
+        scan((merged, gifs) => merged.concat(gifs), [])
       );
     };
 
     this.gifs$ = pager$.pipe(
-      switchMap(pager => fetchGifs(pager)),
+      switchMap(fetchGifs),
       takeUntil(this.unsubscribe),
-      shareReplay(),
+      shareReplay()
     );
   }
 
@@ -65,16 +66,13 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   }
 
   private createDataFetcher(searchText: string): DataFetcher<Gif> {
-    return (pageSize: number, offset: number) => this.giphyService.searchGif(
-      searchText,
-      pageSize,
-      offset
-    ).pipe(
-      map(result => ({
-        data: result.data,
-        fetchedCount: result.pagination.count,
-        totalCount: result.pagination.total_count
-      })),
-    );
+    return (pageSize: number, offset: number) =>
+      this.giphyService.searchGif(searchText, pageSize, offset).pipe(
+        map((result) => ({
+          data: result.data,
+          fetchedCount: result.pagination.count,
+          totalCount: result.pagination.total_count
+        }))
+      );
   }
 }
