@@ -1,11 +1,14 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { ClipboardService } from 'ngx-clipboard';
 
 import { Gif } from '../../models/dto/giphy/gif.dto';
 import { Image } from '../../models/dto/giphy/image';
 
 @Component({
   selector: 'app-gif-image',
-  templateUrl: 'gif-image.component.html'
+  templateUrl: 'gif-image.component.html',
+  styleUrls: ['gif-image.component.scss'],
 })
 export class GifImageComponent implements OnChanges {
   @Input()
@@ -15,10 +18,22 @@ export class GifImageComponent implements OnChanges {
   width: number;
   height: number;
 
+  constructor(
+    private clipboardService: ClipboardService,
+    private snackBar: MatSnackBar
+  ) {}
+
   ngOnChanges(changes): void {
     if ('gif' in changes) {
-      this.setImageProperties(this.gif.images.fixed_width);
+      this.setImageProperties(this.gif.images.fixed_height);
     }
+  }
+
+  onLinkIconClick(): void {
+    this.clipboardService.copyFromContent(this.src);
+    this.snackBar.open('The link was copied to the clipboard! 🥳', undefined, {
+      duration: 1000,
+    });
   }
 
   private setImageProperties(imageData: Image): void {

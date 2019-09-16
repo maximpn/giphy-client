@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ClipboardModule } from 'ngx-clipboard';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { SharedModule } from '../shared/shared.module';
@@ -12,7 +13,7 @@ import { SearchResultComponent } from './components/search-results/search-result
 import { SearchTextResolverService } from './services/search-text-resolver.service';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, SharedModule, FormsModule, PerfectScrollbarModule],
+  imports: [CommonModule, HttpClientModule, SharedModule, FormsModule, PerfectScrollbarModule, ClipboardModule],
   providers: [SearchTextResolverService],
   declarations: [SearchFieldComponent, SearchResultComponent, GifImageComponent],
   exports: [SearchFieldComponent, SearchResultComponent]

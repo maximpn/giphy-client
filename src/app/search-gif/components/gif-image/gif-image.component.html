@@ -1,3 +1,6 @@
-<div>
-  <img *ngIf="src" [src]="src" [width]="width" [height]="height">
+<div class="wrapper">
+  <img class="image" *ngIf="src" [src]="src" [width]="width" [height]="height">
+  <div class="panel">
+    <mat-icon (click)="onLinkIconClick()">link</mat-icon>
+  </div>
 </div>
