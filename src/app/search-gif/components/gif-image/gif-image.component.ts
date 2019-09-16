@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Gif } from '../../../models/dto/giphy/gif.dto';
-import { Image } from '../../../models/dto/giphy/image';
+import { Gif } from '../../models/dto/giphy/gif.dto';
+import { Image } from '../../models/dto/giphy/image';
 
 @Component({
   selector: 'app-gif-image',

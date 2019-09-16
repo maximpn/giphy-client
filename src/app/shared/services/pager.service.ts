@@ -1,49 +1,11 @@
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { DataFetcher, Pager } from './pager';
 
-export interface Pagination<T> {
-  data: T[];
-  fetchedCount: number;
-  totalCount: number;
-}
-
-export type DataFetcher<T> = (pageSize: number, offset: number) => Observable<Pagination<T>>;
-
-@Injectable()
-export class PagerService<T> {
-  private currentOffset = 0;
-
-  constructor(
-    private fetcher: DataFetcher<T>,
-    private pageSize: number,
-    private totalCount?: number,
-  ) {}
-
-  getNextPage(): Observable<T[]> {
-    if (this.currentOffset === -1) {
-      return EMPTY;
-    }
-
-    return this.fetcher(this.pageSize, this.currentOffset).pipe(
-      tap(result => this.updateOffset(result)),
-      map(result => result.data),
-    );
-  }
-
-  private updateOffset(pagination: Pagination<T>): void {
-    this.currentOffset += this.pageSize;
-
-    if (pagination.totalCount && this.totalCount !== pagination.totalCount) {
-      this.totalCount = pagination.totalCount;
-    }
-
-    if (!this.totalCount) {
-      return;
-    }
-
-    if (pagination.fetchedCount < this.pageSize) {
-      this.currentOffset = -1;
-    }
+@Injectable({
+  providedIn: 'root',
+})
+export class PagerService {
+  createPager<T>(fetcher: DataFetcher<T>, pageSize: number, totalCount?: number): Pager<T> {
+    return new Pager(fetcher, pageSize, totalCount);
   }
 }

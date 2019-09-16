@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { SearchResult } from '../../models/dto/giphy/search-result.dto';
+import { SearchResult } from '../../search-gif/models/dto/giphy/search-result.dto';
 
 const GIPHY_API_ENDPOINT = 'https://api.giphy.com';
 const VERSION = 'v1';
