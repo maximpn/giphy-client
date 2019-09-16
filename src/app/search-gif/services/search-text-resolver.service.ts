@@ -5,11 +5,9 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { EMPTY, Observable, of } from 'rxjs';
-import { UrlEncoderService } from '../shared/services/url-encoder.service';
+import { UrlEncoderService } from '../../shared/services/url-encoder.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SearchTextResolverService implements Resolve<string> {
   constructor(private urlEncoderService: UrlEncoderService) {}
 

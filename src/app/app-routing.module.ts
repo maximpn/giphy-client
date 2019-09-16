@@ -5,7 +5,7 @@ import {
 } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SearchResultComponent } from './search-gif/components/search-results/search-result.component';
-import { SearchTextResolverService } from './search-gif/search-text-resolver.service';
+import { SearchTextResolverService } from './search-gif/services/search-text-resolver.service';
 
 export const routes: Routes = [
   {

@@ -9,9 +9,11 @@ import { GifImageComponent } from './components/gif-image/gif-image.component';
 
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { SearchResultComponent } from './components/search-results/search-result.component';
+import { SearchTextResolverService } from './services/search-text-resolver.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, SharedModule, FormsModule, PerfectScrollbarModule],
+  providers: [SearchTextResolverService],
   declarations: [SearchFieldComponent, SearchResultComponent, GifImageComponent],
   exports: [SearchFieldComponent, SearchResultComponent]
 })

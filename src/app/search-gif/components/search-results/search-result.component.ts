@@ -1,24 +1,21 @@
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { Observable, Subject } from 'rxjs';
 import { map, scan, shareReplay, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { DataFetcher, Pager } from '../../../shared/services/pager';
-import { Gif } from '../../models/dto/giphy/gif.dto';
 import { GiphyService } from '../../../shared/services/giphy.service';
+import { DataFetcher, Pager } from '../../../shared/services/pager';
 import { PagerService } from '../../../shared/services/pager.service';
+import { Gif } from '../../models/dto/giphy/gif.dto';
 
 const PAGE_SIZE = 25;
 
 @Component({
   templateUrl: 'search-result.component.html',
   styleUrls: ['search-result.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
   gifs$: Observable<Gif[]>;
-
-  @ViewChild(PerfectScrollbarComponent, { static: true })
-  perfectScrollbar: PerfectScrollbarComponent;
 
   private requestNextPage$ = new Subject();
   private unsubscribe = new Subject();
