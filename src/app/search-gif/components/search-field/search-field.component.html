@@ -1,0 +1,14 @@
+<form>
+  <mat-form-field>
+    <input matInput
+           name="search-text"
+           (keyup.enter)="onEnter()"
+           [(ngModel)]="searchText">
+  </mat-form-field>
+
+  <button mat-raised-button
+          color="primary"
+          (click)="onSearchButtonClick($event)">
+    Search
+  </button>
+</form>

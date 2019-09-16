@@ -32,7 +32,7 @@ describe('GiphyService', () => {
     service.searchGif('some search text', 50, 10).subscribe((result) => (actual = result));
 
     const request = http.expectOne(
-      'http://api.giphy.com/v1/gifs/search?api_key=CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6&limit=50&offset=10&q=some%20search%20text&rating=g&lang=en'
+      'https://api.giphy.com/v1/gifs/search?api_key=CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6&limit=50&offset=10&q=some%20search%20text&rating=g&lang=en'
     );
     request.flush(expected);
 

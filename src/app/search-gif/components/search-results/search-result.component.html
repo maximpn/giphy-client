@@ -1,0 +1,12 @@
+<perfect-scrollbar [config]="{ suppressScrollX: true }"
+                   [scrollIndicators]="false"
+                   (psYReachEnd)="onYReachEnd()">
+  <mat-grid-list cols="5">
+    <mat-grid-tile
+      *ngFor="let gif of gifs$ | async; trackBy: trackByFn"
+      [colspan]="1"
+      [rowspan]="1">
+      <app-gif-image [gif]="gif"></app-gif-image>
+    </mat-grid-tile>
+  </mat-grid-list>
+</perfect-scrollbar>

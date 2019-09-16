@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { SearchResult } from '../models/dto/giphy/search-result.dto';
+import { SearchResult } from '../../models/dto/giphy/search-result.dto';
 
-const GIPHY_DOMAIN = 'http://api.giphy.com';
+const GIPHY_API_ENDPOINT = 'https://api.giphy.com';
 const VERSION = 'v1';
 const API_KEY = 'CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6';
 
@@ -26,7 +26,7 @@ export class GiphyService {
   }
 
   private getBaseUrl(): string {
-    return `${GIPHY_DOMAIN}/${VERSION}`;
+    return `${GIPHY_API_ENDPOINT}/${VERSION}`;
   }
 
   private getDefaultParams(): HttpParams {

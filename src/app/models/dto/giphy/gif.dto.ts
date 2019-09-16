@@ -1,3 +1,5 @@
+import { Image } from './image';
+
 export interface Gif {
   type: string;
   id: string;
@@ -16,6 +18,10 @@ export interface Gif {
   create_datetime: string;
   import_datetime: string;
   trending_datetime: string;
-  images: any[];
+  images: {
+    original: Image,
+    fixed_height: Image,
+    fixed_width: Image,
+  };
   title: string;
 }
