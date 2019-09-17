@@ -1,3 +1,18 @@
 .remained-space {
   flex: 1 1 auto;
+  margin-left: 20px;
+}
+
+.short-title {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .title {
+    display: none;
+  }
+
+  .short-title {
+    display: block;
+  }
 }

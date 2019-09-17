@@ -1,10 +1,5 @@
 <app-infinity-scroll [dataFetcher]="dataFetcher" (dataStream)="onNewDataStream($event)">
-  <mat-grid-list cols="5">
-    <mat-grid-tile
-      *ngFor="let gif of gifs$ | async; trackBy: trackByFn"
-      [colspan]="1"
-      [rowspan]="1">
-      <app-gif-image [gif]="gif"></app-gif-image>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="data-wrapper">
+    <app-gif-image *ngFor="let gif of gifs$ | async; trackBy: trackByFn" [gif]="gif"></app-gif-image>
+  </div>
 </app-infinity-scroll>
