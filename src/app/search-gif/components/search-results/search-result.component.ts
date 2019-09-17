@@ -37,7 +37,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   }
 
   onNewDataStream(data$: Observable<Gif[]>): void {
-    console.log('onNewDataStream', data$);
     this.gifs$ = data$;
   }
 
