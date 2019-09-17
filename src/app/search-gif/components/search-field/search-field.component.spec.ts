@@ -50,11 +50,26 @@ describe('SearchFieldComponent', () => {
     expect(routerMock.navigate).toHaveBeenCalledWith(['search-text']);
   });
 
-  it("should take search text from the active route' data", () => {
+  it("should take search text from the active route's data", () => {
     const expected = 'some text';
 
     const eventMock = new ActivationEnd({
       data: { searchText: expected },
+    } as any);
+
+    component.ngOnInit();
+    routerEvents$.next(eventMock);
+
+    const actual = component.searchText;
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should set an empty string if route' data is empty", () => {
+    const expected = '';
+
+    const eventMock = new ActivationEnd({
+      data: {},
     } as any);
 
     component.ngOnInit();

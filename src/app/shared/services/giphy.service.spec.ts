@@ -12,6 +12,20 @@ describe('GiphyService', () => {
     apiKey: 'some-key',
   };
 
+  it('should throw an error if there is no API key', () => {
+    let thrown = false;
+    let localService: GiphyService;
+
+    try {
+      localService = new GiphyService({} as any, {} as any);
+    } catch {
+      thrown = true;
+    }
+
+    expect(thrown).toBeTruthy();
+    expect(localService).toBeUndefined();
+  });
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

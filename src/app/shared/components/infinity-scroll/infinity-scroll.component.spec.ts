@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { Subject } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { first, switchMap, takeUntil } from 'rxjs/operators';
 
 import { PagerService } from '../../services/pager.service';
 
@@ -63,16 +63,26 @@ describe('InfinityScrollComponent', () => {
 
   describe('when initialized', () => {
     let receivedData: any[];
+    const unsubscribe = new Subject();
 
     beforeEach(() => {
       const change = new SimpleChange(undefined, component.dataFetcher, true);
 
-      component.dataStream.pipe(switchMap(x => x)).subscribe(x => (receivedData = x));
+      component.dataStream
+        .pipe(
+          switchMap(x => x),
+          takeUntil(unsubscribe),
+        )
+        .subscribe(x => (receivedData = x));
 
       component.ngOnChanges({ dataFetcher: change });
       component.ngOnInit();
 
       data$.next([1, 2, 3]);
+    });
+
+    afterEach(() => {
+      unsubscribe.next();
     });
 
     it('should emit the first page of data', () => {
@@ -90,12 +100,12 @@ describe('InfinityScrollComponent', () => {
     });
 
     it('should not emit twice on the same scroll position', () => {
-      pagerMock.getNextPage.and.returnValue([4, 5, 6]);
-
       geometrySpy.and.returnValue({ y: 100 });
 
       component.onYReachEnd(scrollComponentMock);
       component.onYReachEnd(scrollComponentMock);
+
+      data$.next([4, 5, 6]);
 
       expect(receivedData).toEqual([1, 2, 3, 4, 5, 6]);
     });
