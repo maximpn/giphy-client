@@ -34,7 +34,7 @@ export class GifImageComponent implements OnChanges {
   }
 
   private setImageProperties(imageData: Image): void {
-    this.src = imageData.webp;
+    this.src = imageData.mp4;
     this.width = parseInt(imageData.width, 10) || undefined;
     this.height = parseInt(imageData.height, 10) || undefined;
   }
