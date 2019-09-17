@@ -1,8 +1,8 @@
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { Subject } from 'rxjs';
-import { first, switchMap, takeUntil } from 'rxjs/operators';
+import { first, switchMap, take, takeUntil } from 'rxjs/operators';
 
 import { PagerService } from '../../services/pager.service';
 
@@ -25,9 +25,11 @@ describe('InfinityScrollComponent', () => {
   const dataFetcherMock: any = () => {};
 
   const geometrySpy = jasmine.createSpy();
+  const scrollableSpy = jasmine.createSpy();
   const scrollComponentMock: PerfectScrollbarComponent = {
     directiveRef: {
       geometry: geometrySpy,
+      scrollable: scrollableSpy,
     },
   } as any;
 
@@ -61,13 +63,37 @@ describe('InfinityScrollComponent', () => {
     expect(actual.pipe).toBeDefined();
   });
 
+  it('should try to load the next page if there is no scroll', () => {
+    let receivedData: any[];
+
+    spyOn(window, 'setTimeout').and.callFake((cb: any) => cb());
+    scrollableSpy.and.returnValue(false);
+
+    component.dataStream
+      .pipe(
+        switchMap(x => x),
+        take(2),
+      )
+      .subscribe(x => (receivedData = x));
+
+    component.scroll = scrollComponentMock;
+
+    const change = new SimpleChange(undefined, component.dataFetcher, true);
+    component.ngOnChanges({ dataFetcher: change });
+    component.ngOnInit();
+
+    data$.next([1, 2, 3]);
+    data$.next([4, 5, 6]);
+
+    expect(scrollableSpy).toHaveBeenCalledWith('y');
+    expect(receivedData).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
   describe('when initialized', () => {
     let receivedData: any[];
     const unsubscribe = new Subject();
 
     beforeEach(() => {
-      const change = new SimpleChange(undefined, component.dataFetcher, true);
-
       component.dataStream
         .pipe(
           switchMap(x => x),
@@ -75,6 +101,7 @@ describe('InfinityScrollComponent', () => {
         )
         .subscribe(x => (receivedData = x));
 
+      const change = new SimpleChange(undefined, component.dataFetcher, true);
       component.ngOnChanges({ dataFetcher: change });
       component.ngOnInit();
 

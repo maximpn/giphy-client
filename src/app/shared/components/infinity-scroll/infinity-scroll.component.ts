@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
@@ -18,6 +19,7 @@ import {
   startWith,
   switchMap,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 
 import { DataFetcher, Pager } from '../../services/pager';
@@ -39,6 +41,9 @@ export class InfinityScrollComponent<T> implements OnChanges, OnInit, OnDestroy 
   dataStream = new EventEmitter<Observable<T[]>>();
 
   data$: Observable<T[]>;
+
+  @ViewChild(PerfectScrollbarComponent, { static: false })
+  scroll: PerfectScrollbarComponent;
 
   private pager$ = new ReplaySubject<Pager<T>>(1);
   private requestNextPage$ = new Subject<number>();
@@ -73,11 +78,28 @@ export class InfinityScrollComponent<T> implements OnChanges, OnInit, OnDestroy 
     this.ngZone.run(() => this.requestNextPage$.next(scrollTop));
   }
 
+  private scheduleNextPageLoading(): void {
+    if (!this.scroll) {
+      return;
+    }
+
+    setTimeout(() => {
+      if (!this.scroll.directiveRef.scrollable('y')) {
+        this.requestNextPage$.next(1);
+      }
+    });
+  }
+
   private fetchData(pager: Pager<T>): Observable<T[]> {
     return this.requestNextPage$.pipe(
       startWith(0),
       distinctUntilChanged(),
       switchMap(() => pager.getNextPage()),
+      tap(data => {
+        if (data.length) {
+          this.scheduleNextPageLoading();
+        }
+      }),
       scan((merged, data) => merged.concat(data), []),
       shareReplay(),
     );

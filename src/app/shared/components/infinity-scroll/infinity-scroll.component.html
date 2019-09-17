@@ -3,7 +3,7 @@
                    [config]="{ suppressScrollX: true }"
                    [scrollIndicators]="false"
                    (psYReachEnd)="onYReachEnd(scroll)">
-  <ng-content *ngIf="data.length > 0 else notFound"></ng-content>
+  <ng-content *ngIf="data.length > 0 else notFound" class="content"></ng-content>
   <ng-template #notFound>
     <div class="no-results">There is no results found</div>
   </ng-template>
