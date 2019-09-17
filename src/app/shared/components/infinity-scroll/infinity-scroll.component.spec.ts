@@ -72,8 +72,6 @@ describe('InfinityScrollComponent', () => {
       component.ngOnChanges({ dataFetcher: change });
       component.ngOnInit();
 
-      fixture.detectChanges();
-
       data$.next([1, 2, 3]);
     });
 
