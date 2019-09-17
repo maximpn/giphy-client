@@ -2,7 +2,7 @@
 
 This project was done as a solution for the FedEx assessment task.
 
-The live demo can be found [here](https://giphy-client-omjonswo8.now.sh/).
+The live demo can be found [here](https://giphy-client.katzz0.now.sh).
 
 ## Development server
 
