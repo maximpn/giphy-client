@@ -63,32 +63,6 @@ describe('InfinityScrollComponent', () => {
     expect(actual.pipe).toBeDefined();
   });
 
-  it('should try to load the next page if there is no scroll', () => {
-    let receivedData: any[];
-
-    spyOn(window, 'setTimeout').and.callFake((cb: any) => cb());
-    scrollableSpy.and.returnValue(false);
-
-    component.dataStream
-      .pipe(
-        switchMap(x => x),
-        take(2),
-      )
-      .subscribe(x => (receivedData = x));
-
-    component.scroll = scrollComponentMock;
-
-    const change = new SimpleChange(undefined, component.dataFetcher, true);
-    component.ngOnChanges({ dataFetcher: change });
-    component.ngOnInit();
-
-    data$.next([1, 2, 3]);
-    data$.next([4, 5, 6]);
-
-    expect(scrollableSpy).toHaveBeenCalledWith('y');
-    expect(receivedData).toEqual([1, 2, 3, 4, 5, 6]);
-  });
-
   describe('when initialized', () => {
     let receivedData: any[];
     const unsubscribe = new Subject();
@@ -114,6 +88,15 @@ describe('InfinityScrollComponent', () => {
 
     it('should emit the first page of data', () => {
       expect(receivedData).toEqual([1, 2, 3]);
+    });
+
+    it('should try to load the next page if there is no scroll', () => {
+      scrollableSpy.and.returnValue(false);
+      component.scroll = scrollComponentMock;
+      data$.next([4, 5, 6]);
+
+      expect(scrollableSpy).toHaveBeenCalledWith('y');
+      expect(receivedData).toEqual([1, 2, 3, 4, 5, 6]);
     });
 
     it('should emit data when it is scrolled to bottom', () => {
