@@ -1,55 +1,34 @@
-import { ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { map, scan, shareReplay, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { GiphyService } from '../../../shared/services/giphy.service';
-import { DataFetcher, Pager } from '../../../shared/services/pager';
-import { PagerService } from '../../../shared/services/pager.service';
+import { DataFetcher } from '../../../shared/services/pager';
 import { Gif } from '../../models/dto/giphy/gif.dto';
-
-const PAGE_SIZE = 25;
 
 @Component({
   templateUrl: 'search-result.component.html',
-  styleUrls: ['search-result.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
+  dataFetcher: DataFetcher<Gif>;
   gifs$: Observable<Gif[]>;
 
-  private requestNextPage$ = new Subject();
   private unsubscribe = new Subject();
 
   constructor(
     private route: ActivatedRoute,
     private giphyService: GiphyService,
-    private pagerService: PagerService,
-    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
-    const pager$ = this.route.data.pipe(
-      map(data => {
-        const fetcher = this.createDataFetcher(data.searchText);
-
-        return this.pagerService.createPager(fetcher, PAGE_SIZE);
-      }),
-    );
-
-    const fetchGifs = (pager: Pager<Gif>) => {
-      return this.requestNextPage$.pipe(
-        startWith(0),
-        switchMap(() => pager.getNextPage()),
-        scan((merged, gifs) => merged.concat(gifs), []),
-      );
-    };
-
-    this.gifs$ = pager$.pipe(
-      switchMap(fetchGifs),
+    this.route.data.pipe(
       takeUntil(this.unsubscribe),
-      shareReplay(),
-    );
+      map(data => data.searchText),
+    ).subscribe(searchText => {
+      this.dataFetcher = this.createDataFetcher(searchText);
+    });
   }
 
   ngOnDestroy(): void {
@@ -57,8 +36,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  onYReachEnd(): void {
-    this.ngZone.run(() => this.requestNextPage$.next());
+  onNewDataStream(data$: Observable<Gif[]>): void {
+    console.log('onNewDataStream', data$);
+    this.gifs$ = data$;
   }
 
   trackByFn(index: number, item: Gif): string {

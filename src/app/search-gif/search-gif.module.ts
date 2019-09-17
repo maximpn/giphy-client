@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -18,7 +17,6 @@ import { SearchTextResolverService } from './services/search-text-resolver.servi
     HttpClientModule,
     SharedModule,
     FormsModule,
-    PerfectScrollbarModule,
     ClipboardModule,
   ],
   providers: [SearchTextResolverService],

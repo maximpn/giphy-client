@@ -1,19 +1,10 @@
-<perfect-scrollbar *ngIf="gifs$ | async as gifs else loading"
-                   [config]="{ suppressScrollX: true }"
-                   [scrollIndicators]="false"
-                   (psYReachEnd)="onYReachEnd()">
-  <mat-grid-list *ngIf="gifs.length > 0 else notFound" cols="5">
+<app-infinity-scroll [dataFetcher]="dataFetcher" (dataStream)="onNewDataStream($event)">
+  <mat-grid-list cols="5">
     <mat-grid-tile
-      *ngFor="let gif of gifs; trackBy: trackByFn"
+      *ngFor="let gif of gifs$ | async; trackBy: trackByFn"
       [colspan]="1"
       [rowspan]="1">
       <app-gif-image [gif]="gif"></app-gif-image>
     </mat-grid-tile>
   </mat-grid-list>
-  <ng-template #notFound>
-    <div class="no-results">There is no results found</div>
-  </ng-template>
-</perfect-scrollbar>
-<ng-template #loading>
-  <div class="loading">Loading...</div>
-</ng-template>
+</app-infinity-scroll>
