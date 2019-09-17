@@ -1,6 +1,6 @@
 :host form {
-  display: flex;
   align-items: center;
+  display: flex;
   margin: 0 20%;
 
   mat-form-field {
@@ -9,7 +9,7 @@
 
   button {
     flex-basis: 100px;
-    margin-left: 20px;
     height: auto;
+    margin-left: 20px;
   }
 }

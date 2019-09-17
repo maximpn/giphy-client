@@ -1,18 +1,18 @@
 @import "variables";
 
 :host {
+  background-color: $bg-color;
+  color: $text-color;
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $bg-color;
-  color: $text-color;
 }
 
 header {
-  flex: 0 0 auto;
-  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   background-color: $bg-color;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
   color: $text-color;
+  flex: 0 0 auto;
 }
 
 main {
