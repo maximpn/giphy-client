@@ -1,5 +1,6 @@
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { Subject } from 'rxjs';
 import { first, switchMap } from 'rxjs/operators';
 
@@ -22,6 +23,13 @@ describe('InfinityScrollComponent', () => {
   });
 
   const dataFetcherMock: any = () => {};
+
+  const geometrySpy = jasmine.createSpy();
+  const scrollComponentMock: PerfectScrollbarComponent = {
+    directiveRef: {
+      geometry: geometrySpy,
+    },
+  } as any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -74,9 +82,22 @@ describe('InfinityScrollComponent', () => {
     });
 
     it('should emit data when it is scrolled to bottom', () => {
-      component.onYReachEnd();
+      geometrySpy.and.returnValue({ y: 100 });
+
+      component.onYReachEnd(scrollComponentMock);
 
       data$.next([4, 5, 6]);
+
+      expect(receivedData).toEqual([1, 2, 3, 4, 5, 6]);
+    });
+
+    it('should not emit twice on the same scroll position', () => {
+      pagerMock.getNextPage.and.returnValue([4, 5, 6]);
+
+      geometrySpy.and.returnValue({ y: 100 });
+
+      component.onYReachEnd(scrollComponentMock);
+      component.onYReachEnd(scrollComponentMock);
 
       expect(receivedData).toEqual([1, 2, 3, 4, 5, 6]);
     });

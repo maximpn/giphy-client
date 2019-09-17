@@ -1,7 +1,8 @@
-<perfect-scrollbar *ngIf="data$ | async as data else loading"
+<perfect-scrollbar #scroll
+                   *ngIf="data$ | async as data else loading"
                    [config]="{ suppressScrollX: true }"
                    [scrollIndicators]="false"
-                   (psYReachEnd)="onYReachEnd()">
+                   (psYReachEnd)="onYReachEnd(scroll)">
   <ng-content *ngIf="data.length > 0 else notFound"></ng-content>
   <ng-template #notFound>
     <div class="no-results">There is no results found</div>
