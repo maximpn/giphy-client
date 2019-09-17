@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, NgZone, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { scan, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -26,10 +36,7 @@ export class InfinityScrollComponent<T> implements OnChanges, OnInit, OnDestroy 
   private requestNextPage$ = new Subject();
   private unsubscribe = new Subject();
 
-  constructor(
-    private pagerService: PagerService,
-    private ngZone: NgZone,
-  ) {}
+  constructor(private pagerService: PagerService, private ngZone: NgZone) {}
 
   ngOnChanges(changes): void {
     if ('dataFetcher' in changes) {
@@ -40,9 +47,7 @@ export class InfinityScrollComponent<T> implements OnChanges, OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.pager$.pipe(
-      takeUntil(this.unsubscribe),
-    ).subscribe(pager => {
+    this.pager$.pipe(takeUntil(this.unsubscribe)).subscribe(pager => {
       this.data$ = this.fetchData(pager);
 
       this.dataStream.emit(this.data$);

@@ -12,13 +12,7 @@ import { SearchResultComponent } from './components/search-results/search-result
 import { SearchTextResolverService } from './services/search-text-resolver.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    SharedModule,
-    FormsModule,
-    ClipboardModule,
-  ],
+  imports: [CommonModule, HttpClientModule, SharedModule, FormsModule, ClipboardModule],
   providers: [SearchTextResolverService],
   declarations: [SearchFieldComponent, SearchResultComponent, GifImageComponent],
   exports: [SearchFieldComponent, SearchResultComponent],

@@ -9,7 +9,7 @@ import { Gif } from '../../models/dto/giphy/gif.dto';
 
 @Component({
   templateUrl: 'search-result.component.html',
-  styleUrls: ['search-result.component.scss']
+  styleUrls: ['search-result.component.scss'],
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
   dataFetcher: DataFetcher<Gif>;
@@ -17,18 +17,17 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  constructor(
-    private route: ActivatedRoute,
-    private giphyService: GiphyService,
-  ) {}
+  constructor(private route: ActivatedRoute, private giphyService: GiphyService) {}
 
   ngOnInit(): void {
-    this.route.data.pipe(
-      takeUntil(this.unsubscribe),
-      map(data => data.searchText),
-    ).subscribe(searchText => {
-      this.dataFetcher = this.createDataFetcher(searchText);
-    });
+    this.route.data
+      .pipe(
+        takeUntil(this.unsubscribe),
+        map(data => data.searchText),
+      )
+      .subscribe(searchText => {
+        this.dataFetcher = this.createDataFetcher(searchText);
+      });
   }
 
   ngOnDestroy(): void {
