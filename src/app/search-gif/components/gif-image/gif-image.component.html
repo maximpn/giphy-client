@@ -1,7 +1,5 @@
 <div class="wrapper">
-  <video class="image" *ngIf="src" [width]="width" [height]="height" autoplay loop>
-    <source [src]="src" type="video/mp4">
-  </video>
+  <img *ngIf="src" [src]="src" [width]="width" [height]="height">
   <div class="panel">
     <mat-icon (click)="onLinkIconClick()">link</mat-icon>
   </div>

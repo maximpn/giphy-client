@@ -35,7 +35,7 @@ describe('GifImageComponent', () => {
     component.gif = {
       images: {
         fixed_height: {
-          mp4: 'mp4-data',
+          webp: 'data',
           width: '100',
           height: '100',
         },
@@ -45,7 +45,7 @@ describe('GifImageComponent', () => {
     const change = new SimpleChange(undefined, component.gif, true);
     component.ngOnChanges({ gif: change });
 
-    expect(component.src).toBe('mp4-data');
+    expect(component.src).toBe('data');
     expect(component.width).toBe(100);
     expect(component.height).toBe(100);
   });
